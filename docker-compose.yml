@@ -57,9 +57,9 @@ services:
 
   minio:
     labels:
-      virtual.host: 'storage.5dm.africa' # change to your domain
-      virtual.port: '9000'
-      virtual.tls-email: 'subs@5dm.africa' # change to your email
+      'virtual.host': 'storage.5dm.africa' # Explicitly quote the key
+      'virtual.port': '9000'             # Explicitly quote the key
+      'virtual.tls-email': 'subs@5dm.africa' # Explicitly quote the key
     image: minio/minio
     command: server /data
     ports:

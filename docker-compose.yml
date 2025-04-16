@@ -55,34 +55,6 @@ services:
     ports:
       - "8081:3000"
 
-  minio:
-    labels:
-      'virtual.host': 'storage.5dm.africa' # Explicitly quote the key
-      'virtual.port': '9000'             # Explicitly quote the key
-      'virtual.tls-email': 'subs@5dm.africa' # Explicitly quote the key
-    image: minio/minio
-    command: server /data
-    ports:
-      - '9000:9000'
-    environment:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: minio123
-    volumes:
-      - s3-data:/data
-
-  createbuckets:
-    image: minio/mc
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      sleep 10;
-      /usr/bin/mc config host add minio http://minio:9000 minio minio123;
-      /usr/bin/mc mb minio/typebot;
-      /usr/bin/mc anonymous set public minio/typebot/public;
-      exit 0;
-      "
-
 networks:
   typebot-network:
     driver: bridge
@@ -90,4 +62,3 @@ networks:
 volumes:
   db-data:
   redis-data:
-  s3-data:

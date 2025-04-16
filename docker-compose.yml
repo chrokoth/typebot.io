@@ -54,8 +54,8 @@ services:
     image: baptistearno/typebot-viewer:latest
     ports:
       - "8081:3000"
-#start minio
-minio:
+
+  minio:
     labels:
       virtual.host: 'storage.5dm.africa' # change to your domain
       virtual.port: '9000'
@@ -69,7 +69,7 @@ minio:
       MINIO_ROOT_PASSWORD: minio123
     volumes:
       - s3-data:/data
-  # This service just make sure a bucket with the right policies is created
+
   createbuckets:
     image: minio/mc
     depends_on:
@@ -82,7 +82,7 @@ minio:
       /usr/bin/mc anonymous set public minio/typebot/public;
       exit 0;
       "
-#end minio
+
 networks:
   typebot-network:
     driver: bridge
